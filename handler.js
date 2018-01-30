@@ -5,22 +5,19 @@ var request = require('request');
 
 module.exports.doGet = (event, context, callback) => {
   var url = "https://jsonplaceholder.typicode.com/posts/1";
-  https.get(url, res => {
-    res.setEncoding("utf8");
-    let body = "";
-    res.on("data", data => {
-      body += data;
-    });
-    res.on("end", () => {
-      body = JSON.parse(body);
-      const response = {
+  request({
+      url: url,
+      method: "GET",
+  }, function (error, response, body){
+      console.log(response);
+      const responseCallback = {
         statusCode: 200,
         body: JSON.stringify({
           message: body
         }),
       };
-      callback(null, response);
-    });
+      callback(null, responseCallback);
+
 });
 };
 
